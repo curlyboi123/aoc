@@ -28,5 +28,12 @@ func main() {
 	}
 	fmt.Println("(Part 1) Single value increases", single_value_increases)
 
-	fmt.Println(num_of_increases)
+	// Part 2 
+	average_of_three_increases := 0
+	for i := 3; i < len(readings); i++ {
+		if readings[i - 3] < readings[i] {
+			average_of_three_increases += 1
+		}
+	}
+	fmt.Println("(Part 2) Average of three increases", average_of_three_increases)
 }
