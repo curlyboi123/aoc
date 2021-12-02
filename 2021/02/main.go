@@ -8,8 +8,7 @@ import (
 	"strings"
 )
 
-func main() {
-	// Move to common module
+func get_readings(file *os.File) []string {
 	var readings []string
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -20,6 +19,12 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
+	
+	return readings
+}
+
+func main() {
+	readings := get_readings(os.Stdin)
 
 	// Part 1
 	depth := 0
