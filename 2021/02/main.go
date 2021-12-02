@@ -47,8 +47,36 @@ func main() {
 		}
 	}
 
+	fmt.Println("###Part 1###")
 	fmt.Println("Depth:", depth)
 	fmt.Println("Horizontal position:", horizontal_position)
+	fmt.Println("Product:", depth * horizontal_position)
 
+	// Part 2
+	depth = 0
+	horizontal_position = 0
+	aim := 0
+
+	for _, element := range readings {
+		s := strings.Split(element, " ")
+
+		direction := s[0]
+		amount, _ := strconv.Atoi(s[1])
+
+		if direction == "forward" {
+			horizontal_position += amount
+			depth += aim * amount
+		}
+		if direction == "up" {
+			aim -= amount
+		}
+		if direction == "down" {
+			aim += amount
+		}
+	}
+
+	fmt.Println("###Part 2###")
+	fmt.Println("Depth:", depth)
+	fmt.Println("Horizontal position:", horizontal_position)
 	fmt.Println("Product:", depth * horizontal_position)
 }
