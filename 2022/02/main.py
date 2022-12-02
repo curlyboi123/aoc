@@ -49,11 +49,11 @@ def round_calculator(self_action: str, opponent_action: str) -> int:
 
 
 def action_calculator(opponent_action: str, desired_result: str) -> str:
-    """A function to calculate the decision the player should use to beat the opponent in a game of rock, paper, scissors
+    """A function to calculate the decision self should use to beat the opponent in a game of rock, paper, scissors
 
-    :param opponent_action: The action that the opponent has chosen ('rock', 'paper', 'scissors')
+    :param opponent_action: The action that the opponent has chosen
     :type opponent_action: str
-    :param desired_result: The desired result in the game ('win', 'loss', 'draw')
+    :param desired_result: The desired result in the round
     :type desired_result: str
     :returns: a string representing the action the player should choose to beat the opponent
     :rtype: str
@@ -72,7 +72,6 @@ def action_calculator(opponent_action: str, desired_result: str) -> str:
         player_action = WIN_RESPONSES[opponent_action]
     elif desired_result == "loss":
         player_action = LOSS_RESPONSES[opponent_action]
-
     return player_action
 
 
