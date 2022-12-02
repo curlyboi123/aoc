@@ -11,7 +11,6 @@ def main():
     highest_calories = max(calorie_totals)
 
     top_three_highest_calories = sorted(calorie_totals)[len(calorie_totals) - 3:]
-    
 
     print(highest_calories)
     print(sum(top_three_highest_calories))
