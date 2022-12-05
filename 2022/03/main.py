@@ -2,11 +2,11 @@ import sys
 
 
 def split(list_a, chunk_size):
-  for i in range(0, len(list_a), chunk_size):
-    yield list_a[i:i + chunk_size]
+    for i in range(0, len(list_a), chunk_size):
+        yield list_a[i:i + chunk_size]
 
 
-def priority_caluclator(letter: str) -> int:
+def priority_calculator(letter: str) -> int:
     if letter.islower():
         priority = ord(letter) - 96
     else:
@@ -20,7 +20,7 @@ def part_one(lines: list) -> int:
         first_rucksack = line[:len(line)//2]
         second_rucksack = line[len(line)//2:]
         common_element = ''.join(set(first_rucksack).intersection(second_rucksack))
-        priority_total += priority_caluclator(common_element)
+        priority_total += priority_calculator(common_element)
     return priority_total
 
 
@@ -29,7 +29,7 @@ def part_two(lines: list) -> int:
     priority_total = 0
     for group in groups:
         common_element = ''.join(set(group[0]).intersection(group[1], group[2]))
-        priority_total += priority_caluclator(common_element)
+        priority_total += priority_calculator(common_element)
     return priority_total
         
 
