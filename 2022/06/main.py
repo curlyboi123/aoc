@@ -1,17 +1,10 @@
 import sys
 
 
-def solver(part: str) -> int:
+def solver(block_size: int) -> int:
     path_to_file = sys.argv[1]
     with open(path_to_file) as f:
         content = f.read()
-
-    if part == "1":
-        block_size = 4
-    elif part == "2":
-        block_size = 14
-    else:
-        raise ValueError("Function only accepts values '1' and '2'")
 
     for i in range(0, len(content) - block_size):
         block = content[i: i + block_size]
@@ -21,8 +14,8 @@ def solver(part: str) -> int:
 
 
 def main():
-    part_one_result = solver("1")
-    part_two_result = solver("2")
+    part_one_result = solver(4)
+    part_two_result = solver(14)
 
     print(part_one_result)
     print(part_two_result)
