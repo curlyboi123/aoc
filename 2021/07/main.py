@@ -1,4 +1,6 @@
 import sys
+import math
+import statistics
 
 
 def main():
@@ -10,21 +12,16 @@ def main():
     values.sort()
     
     # Part one
-    middle_pos = round(len(values) / 2)
-    if len(values) % 2 == 0:
-        median = (values[middle_pos] + values[middle_pos]) / 2
-    else:
-        median = values[middle_pos]
+    median = statistics.median(values)
     total_fuel_used = sum([abs(median - i) for i in values])
     print(round(total_fuel_used))
     
     # Part two
-    # Need to work out mean rounded down and up to know which fuel amount will be lower
-    means = [sum(values) // len(values), round(sum(values) / len(values))]
+    mean = statistics.mean(values)
 
     fuel_burn = lambda x, p: abs(x - p) * (abs(x - p) + 1) // 2
     
-    total_fuel_used = min(sum([fuel_burn(mean, crab_pos) for crab_pos in values]) for mean in means)
+    total_fuel_used = min(sum([fuel_burn(mean, crab_pos) for crab_pos in values]) for mean in [math.floor(mean), math.ceil(mean)])
     print(total_fuel_used)
 
 
