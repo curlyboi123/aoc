@@ -1,4 +1,5 @@
 import sys
+import re
 
 
 def main():
@@ -11,7 +12,7 @@ def main():
     current_dir = ""  # Var to track current position e.g. '/dir_a/dir_b/'
     for action in actions:
         if action[0].startswith("cd"):
-            destination_dir = action[0].split("cd")[-1].strip()
+            destination_dir = re.sub("cd ", "", action[0])
             # Go to the root of the file system
             if destination_dir == "/":
                 current_dir = "/"
@@ -24,7 +25,7 @@ def main():
             files = []
             for move in action[1:]:
                 if move.startswith("dir"):
-                    new_dir = move.split(" ")[1]
+                    new_dir = re.sub("dir ", "", move)
                     system_dir[f"{current_dir}{'' if current_dir == '/' else '/'}{new_dir}"] = []
                 else:
                     files.append(int(move.split(" ")[0]))
