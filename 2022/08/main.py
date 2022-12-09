@@ -18,25 +18,16 @@ def main():
     visible_trees = 0
     for row_pos, tree_row in enumerate(lines):
         for col_pos, current_tree in enumerate(tree_row):
+            # If tree is on the edge then it is definitely visible
             if row_pos == 0 or row_pos == len(lines) - 1 or col_pos == 0 or col_pos == len(tree_row) - 1:
                 visible_trees += 1
+            # Check if inner tree is visible from any direction
             else:
                 trees_above = [i[col_pos] for i in lines[:row_pos]]
                 trees_right = tree_row[col_pos + 1:]
                 trees_below = [i[col_pos] for i in lines[row_pos + 1:]]
                 trees_left = tree_row[:col_pos]
-
-                # Check if visible from top
-                if not any([tree >= current_tree for tree in trees_above]):
-                    visible_trees += 1
-                # Check if visible from right
-                elif not any([tree >= current_tree for tree in trees_right]):
-                    visible_trees += 1
-                # Check if visible from below
-                elif not any([tree >= current_tree for tree in trees_below]):
-                    visible_trees += 1
-                # Check if visible from left
-                elif not any([tree >= current_tree for tree in trees_left]):
+                if any(max(trees) < current_tree for trees in [trees_above, trees_right, trees_below, trees_left]):
                     visible_trees += 1
     print(visible_trees)
 
