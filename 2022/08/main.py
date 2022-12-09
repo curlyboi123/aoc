@@ -16,35 +16,41 @@ def main():
         lines = [list(f.strip()) for f in f.readlines()]
     # Part one
     visible_trees = 0
-    for row_pos, tree_row in enumerate(lines):
-        for col_pos, current_tree in enumerate(tree_row):
+    height = len(lines)
+    width = len(lines[0])
+
+    for x in range(width):
+        for y in range(height):
+            tree = lines[y][x]
             # If tree is on the edge then it is definitely visible
-            if row_pos == 0 or row_pos == len(lines) - 1 or col_pos == 0 or col_pos == len(tree_row) - 1:
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
                 visible_trees += 1
             # Check if inner tree is visible from any direction
             else:
-                trees_above = [i[col_pos] for i in lines[:row_pos]]
-                trees_right = tree_row[col_pos + 1:]
-                trees_below = [i[col_pos] for i in lines[row_pos + 1:]]
-                trees_left = tree_row[:col_pos]
-                if any(max(trees) < current_tree for trees in [trees_above, trees_right, trees_below, trees_left]):
+                trees_above = [i[x] for i in lines[:y]]
+                trees_right = lines[y][x + 1:]
+                trees_below = [i[x] for i in lines[y + 1:]]
+                trees_left = lines[y][:x]
+                if any(max(trees) < tree for trees in [trees_above, trees_right, trees_below, trees_left]):
                     visible_trees += 1
     print(visible_trees)
 
     # Part two
     largest_scenic_score = 0
-    for row_pos, tree_row in enumerate(lines):
-        for col_pos, current_tree in enumerate(tree_row):       
-            if not (row_pos == 0 or row_pos == len(lines) - 1 or col_pos == 0 or col_pos == len(tree_row) - 1):
-                trees_above = [i[col_pos] for i in lines[:row_pos]][::-1]
-                trees_right = tree_row[col_pos + 1:]
-                trees_below = [i[col_pos] for i in lines[row_pos + 1:]]
-                trees_left = tree_row[:col_pos][::-1]
+    for x in range(width):
+        for y in range(height):
+            tree = lines[y][x]
+            # If tree is on the edge then it is definitely visible
+            if not (x == 0 or x == width - 1 or y == 0 or y == height - 1):
+                trees_above = [i[x] for i in lines[:y]][::-1]
+                trees_right = lines[y][x + 1:]
+                trees_below = [i[x] for i in lines[y + 1:]]
+                trees_left = lines[y][:x][::-1]
 
-                above_scenic_score = scenic_score_calculator(trees_above, current_tree)
-                right_scenic_score = scenic_score_calculator(trees_right, current_tree)
-                below_scenic_score = scenic_score_calculator(trees_below, current_tree)
-                left_scenic_score = scenic_score_calculator(trees_left, current_tree)
+                above_scenic_score = scenic_score_calculator(trees_above, tree)
+                right_scenic_score = scenic_score_calculator(trees_right, tree)
+                below_scenic_score = scenic_score_calculator(trees_below, tree)
+                left_scenic_score = scenic_score_calculator(trees_left, tree)
 
                 scenic_score_total = above_scenic_score * right_scenic_score * below_scenic_score * left_scenic_score
                 largest_scenic_score = max(largest_scenic_score, scenic_score_total)
