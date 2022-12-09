@@ -14,23 +14,26 @@ def main():
     path_to_file = sys.argv[1]
     with open(path_to_file) as f:
         lines = [list(f.strip()) for f in f.readlines()]
+
     # Part one
     visible_trees = 0
     height = len(lines)
     width = len(lines[0])
 
     for x in range(width):
+        col = [row[x] for row in lines]
         for y in range(height):
+            row = lines[y]
             tree = lines[y][x]
             # If tree is on the edge then it is definitely visible
             if x == 0 or x == width - 1 or y == 0 or y == height - 1:
                 visible_trees += 1
             # Check if inner tree is visible from any direction
             else:
-                trees_above = [i[x] for i in lines[:y]]
-                trees_right = lines[y][x + 1:]
-                trees_below = [i[x] for i in lines[y + 1:]]
-                trees_left = lines[y][:x]
+                trees_above =  col[:y]
+                trees_right = row[x + 1:]
+                trees_below = col[y + 1:]
+                trees_left = row[:x]
                 if any(max(trees) < tree for trees in [trees_above, trees_right, trees_below, trees_left]):
                     visible_trees += 1
     print(visible_trees)
@@ -38,14 +41,16 @@ def main():
     # Part two
     largest_scenic_score = 0
     for x in range(width):
+        col = [row[x] for row in lines]
         for y in range(height):
+            row = lines[y]
             tree = lines[y][x]
             # If tree is on the edge then it is definitely visible
             if not (x == 0 or x == width - 1 or y == 0 or y == height - 1):
-                trees_above = [i[x] for i in lines[:y]][::-1]
-                trees_right = lines[y][x + 1:]
-                trees_below = [i[x] for i in lines[y + 1:]]
-                trees_left = lines[y][:x][::-1]
+                trees_above = col[:y][::-1]
+                trees_right = row[x + 1:]
+                trees_below = col[y + 1:]
+                trees_left = row[:x][::-1]
 
                 above_scenic_score = scenic_score_calculator(trees_above, tree)
                 right_scenic_score = scenic_score_calculator(trees_right, tree)
